@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VengeX Sensi Services</title>
+    <style>
+        :root {
+            --primary: #ff0055;
+            --primary-glow: rgba(255, 0, 85, 0.4);
+            --secondary: #7000ff;
+            --bg-dark: #070709;
+            --card-bg: #111116;
+            --card-border: #1f1f2a;
+            --text-main: #ffffff;
+            --text-muted: #8e8e9f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: crosshair; /* Custom gaming cursor */
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* BACKGROUND CANVAS FOR MOVING PARTICLES & TRAIL EFFECT */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* HEADER & NAV */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(7, 7, 9, 0.85);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .nav-logo-img {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .logo-text span.red-text { color: #ff0055; }
+        .logo-text span.white-text { color: #ffffff; }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 5px 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #fff;
+            background: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .nav-link.special {
+            background: linear-gradient(135deg, rgba(255,0,85,0.2), rgba(112,0,255,0.2));
+            border: 1px solid var(--primary);
+            color: #fff;
+        }
+
+        /* TAB SECTIONS */
+        .tab-content {
+            display: none;
+            padding: 60px 8%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO SECTION (HOME) */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-style: italic;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        .hero h1 span { color: var(--primary); }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 32px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: #1a1a24;
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 32px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--card-border);
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: #252533;
+            transform: translateY(-2px);
+        }
+
+        /* REPOSITORY HEADERS & SUB-TABS */
+        .repo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .repo-header p.sub {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .repo-header h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-style: italic;
+        }
+
+        .sub-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .sub-tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .sub-tab-btn:hover, .sub-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* GRID & CARDS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-img-placeholder {
+            width: 100%;
+            height: 160px;
+            background: #0d0d12;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .card-img-placeholder img {
+            max-height: 85px;
+            object-fit: contain;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+        }
+
+        .price-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .price-val {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .btn-buy {
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .btn-buy:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* PAY HERE BOX STYLES */
+        .pay-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .pay-box ol {
+            text-align: left;
+            margin: 25px 0 35px 0;
+            padding-left: 20px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .pay-box ol li {
+            margin-bottom: 12px;
+        }
+
+        .pay-box ol li strong {
+            color: #fff;
+        }
+
+        /* AIMX PRO PAGE */
+        .aimx-hero {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .aimx-logo {
+            height: 90px;
+            margin-bottom: 20px;
+        }
+
+        .aimx-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+
+        .aimx-hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 15px auto 30px auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--card-border);
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 850px) {
+            header { flex-direction: column; gap: 15px; }
+            nav { flex-wrap: wrap; justify-content: center; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background & Interactive Trail Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header Navigation Bar -->
+    <header>
+        <div class="logo-container" onclick="switchTab('home')">
+            <img src="https://i.imgur.com/jdJ3c8M.png" class="nav-logo-img" alt="VengeX Sensi Logo">
+            <div class="logo-text"><span class="red-text">VENGEX</span> <span class="white-text">SENSI</span></div>
+        </div>
+        <nav>
+            <div class="nav-link active" onclick="switchTab('home')">Home</div>
+            <div class="nav-link" onclick="switchTab('optimization')">Optimization</div>
+            <div class="nav-link" onclick="switchTab('sensi-pro')">Sensi Pro</div>
+            <div class="nav-link special" onclick="switchTab('special')">Special</div>
+            <div class="nav-link" onclick="switchTab('free-stuff')">Free Stuff</div>
+            <div class="nav-link" onclick="switchTab('aimx-pro')">AimX Pro</div>
+            <div class="nav-link" onclick="switchTab('pay-here')">Pay Here</div>
+        </nav>
+    </header>
+
+    <!-- TAB 1: HOME -->
+    <section id="home" class="tab-content active">
+        <div class="hero">
+            <h1>VengeX Sensi <span>Services</span></h1>
+            <p>Premium performance optimization utilities engineered specifically for competitive esports. Strip background memory latency, stabilize frame targets, and access custom pro-level sensitivity configurations.</p>
+            <div class="hero-btns">
+                <a href="#" class="btn-primary" onclick="switchTab('optimization')">Optimization Store</a>
+                <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-secondary">Join Discord</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 2: SENSI PACKS -->
+    <section id="optimization" class="tab-content">
+        <div class="repo-header">
+            <p class="sub">VENGExSENSI PACKS</p>
+            <h2>PREMIUM SENSI</h2>
+        </div>
+
+        <div class="sub-tabs">
+            <button class="sub-tab-btn active">All Packs</button>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <img src="https://i.imgur.com/jdJ3c8M.png" alt="Logo">
+                </div>
+                <h3>Ios Sensi Pack📱</h3>
+                <p>Experience smoother aim, faster drag shots, and better control. Includes the best sensitivity settings, recommended iPhone settings, a complete setup guide, and a step-by-step tutorial if you need help getting everything configured.</p>
+                <div class="card-footer">
+                    <div>
+                        <span class="price-label">Investment</span>
+                        <span class="price-val">$15.00</span>
+                    </div>
+                    <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-buy">Buy Now</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <img src="https://i.imgur.com/jdJ3c8M.png" alt="Logo">
+                </div>
+                <h3>Android Sensi Pack📱</h3>
+                <p>Built for all Android devices. Get optimized sensitivity settings, recommended phone settings, performance tips, and an easy setup tutorial to help you achieve more consistent gameplay.</p>
+                <div class="card-footer">
+                    <div>
+                        <span class="price-label">Investment</span>
+                        <span class="price-val">$12.00</span>
+                    </div>
+                    <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-buy">Buy Now</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <img src="https://i.imgur.com/jdJ3c8M.png" alt="Logo">
+                </div>
+                <h3>Pc Sensi Pack💻</h3>
+                <p>All tweaks and tools applied to paid emulator & secret OS configurations for ultimate responsiveness.</p>
+                <div class="card-footer">
+                    <div>
+                        <span class="price-label">Investment</span>
+                        <span class="price-val">$30.00</span>
+                    </div>
+                    <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-buy">Buy Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 3: SENSI PRO SETUP-->
+    <section id="sensi-pro" class="tab-content">
+        <div class="repo-header">
+            <p class="sub">Sensitivity & FULL PACK</p>
+            <h2>Pro Sensi Setup</h2>
+        </div>
+
+        <div class="sub-tabs">
+            <button class="sub-tab-btn active">All</button>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <img src="https://i.imgur.com/jdJ3c8M.png" alt="Logo">
+                </div>
+                <h3>VengeX Sensi - Essential</h3>
+                <p>Universal DPI & Pointer speed calibration, customized touch-delay setup for mobile drag headshots.</p>
+                <div class="card-footer">
+                    <div>
+                        <span class="price-label">Price</span>
+                        <span class="price-val">$25.00</span>
+                    </div>
+                    <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-buy">Acquire License</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <img src="https://i.imgur.com/jdJ3c8M.png" alt="Logo">
+                </div>
+                <h3>VengeX Sensi - Precision</h3>
+                <p>High precision registry & sensitivity calibration for PC emulators and pro gaming setups.</p>
+                <div class="card-footer">
+                    <div>
+                        <span class="price-label">Price</span>
+                        <span class="price-val">$50.00</span>
+                    </div>
+                    <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-buy">Acquire License</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 4: SPECIAL -->
+    <section id="special" class="tab-content">
+        <div class="repo-header">
+            <p class="sub">Exclusive Access</p>
+            <h2>Special Offers</h2>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-img-placeholder">
+                    <img src="https://i.imgur.com/jdJ3c8M.png" alt="Logo">
+                </div>
+                <h3>VengeX Custom OS</h3>
+                <p>Engineered for maximum low latency and stripped background services dedicated to high FPS gaming.</p>
+                <div class="card-footer">
+                    <div>
+                        <span class="price-label">Status</span>
+                        <span class="price-val">Coming Soon</span>
+                    </div>
+                    <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-buy">Join Waitlist</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 5: FREE STUFF -->
+    <section id="free-stuff" class="tab-content">
+        <div class="repo-header">
+            <p class="sub">Community Resources</p>
+            <h2>Free Downloads</h2>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <h3>VengeX Mouse Reg</h3>
+                <p>Instant registry optimizer to stabilize raw mouse input curves.</p>
+                <div class="card-footer">
+                    <div><span class="price-val">FREE</span></div>
+                    <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-buy">Download</a>
+                </div>
+            </div>
+            <div class="card">
+                <h3>VengeX Emulator Tweak</h3>
+                <p>Basic keymapping and memory cleaner script for BlueStacks / MSI.</p>
+                <div class="card-footer">
+                    <div><span class="price-val">FREE</span></div>
+                    <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-buy">Download</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 6: VENGEXSENSI PRO -->
+    <section id="aimx-pro" class="tab-content">
+        <div class="aimx-hero">
+            <img src="https://i.imgur.com/jdJ3c8M.png" class="aimx-logo" alt="Logo">
+            <h1>AIMX PRO</h1>
+            <p>VENGEXSENSI Pro is tested optimized Free Fire sensi pack for headshot precision smooth drag,We Dont Promote Hacks‼️</p>
+            <div class="hero-btns" style="justify-content: center;">
+                <a href="https://discord.gg/XzreMw4mn" target="_blank" class="btn-primary">BUY VENGEANCE SENSI NOW</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 7: PAY HERE -->
+    <section id="pay-here" class="tab-content">
+        <div class="repo-header">
+            <p class="sub">Checkout & Instructions</p>
+            <h2>Pay Here</h2>
+        </div>
+        <div class="pay-box">
+            <h3>Payment Instructions</h3>
+            <ol>
+                <li>Before you pay here, place your <strong>Name / Username</strong> in the payment note.</li>
+                <li>Join my <strong>Discord</strong> server and create a ticket.</li>
+                <li>Tell me your name in the ticket so I can verify your order!</li>
+                <li><em>Alternatively:</em> You can join my Discord, make a ticket, and purchase directly from there. (Recommended way)</li>
+            </ol>
+            <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8" target="_blank" class="btn-primary" style="font-size: 1.1rem; padding: 16px 40px;">PAY HERE VIA STREAMLABS</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 VengeX Sensi Services. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            const targetTab = document.getElementById(tabId);
+            if(targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            const activeLink = Array.from(navLinks).find(link => 
+                link.getAttribute('onclick') && link.getAttribute('onclick').includes(tabId)
+            );
+            if(activeLink && tabId !== 'special') {
+                activeLink.classList.add('active');
+            }
+        }
+
+        // BACKGROUND & CURSOR TRAIL ANIMATION SYSTEM
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Background floating particles
+        const particles = [];
+        const numParticles = 45;
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                color: Math.random() > 0.5 ? '#ff0055' : '#7000ff',
+                alpha: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        // Mouse trail particles
+        const trail = [];
+        window.addEventListener('mousemove', (e) => {
+            for(let i = 0; i < 2; i++) {
+                trail.push({
+                    x: e.clientX,
+                    y: e.clientY,
+                    radius: Math.random() * 4 + 2,
+                    alpha: 1,
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5,
+                    color: Math.random() > 0.3 ? '#ff0055' : '#7000ff'
+                });
+            }
+        });
+
+        // Main Animation Loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Render floating background particles
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = p.color;
+                ctx.fill();
+            });
+
+            // Render cursor interactive trail
+            for (let i = 0; i < trail.length; i++) {
+                const t = trail[i];
+                t.x += t.vx;
+                t.y += t.vy;
+                t.alpha -= 0.025;
+
+                if (t.alpha <= 0) {
+                    trail.splice(i, 1);
+                    i--;
+                    continue;
+                }
+
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, t.radius, 0, Math.PI * 2);
+                ctx.fillStyle = t.color;
+                ctx.globalAlpha = t.alpha;
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = t.color;
+                ctx.fill();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
