@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VengeX Sensi Services</title>
+    <title>VengeX Sensi Services | Free Fire Optimization</title>
     <style>
         :root {
             --primary: #ff0055;
-            --primary-glow: rgba(255, 0, 85, 0.5);
+            --primary-glow: rgba(255, 0, 85, 0.6);
             --secondary: #7000ff;
-            --secondary-glow: rgba(112, 0, 255, 0.4);
-            --bg-dark: #070709;
-            --card-bg: #111116;
-            --card-border: #1f1f2a;
+            --secondary-glow: rgba(112, 0, 255, 0.5);
+            --cyan: #00f0ff;
+            --cyan-glow: rgba(0, 240, 255, 0.5);
+            --bg-dark: #050508;
+            --card-bg: rgba(15, 15, 22, 0.75);
+            --card-border: rgba(255, 0, 85, 0.25);
             --text-main: #ffffff;
-            --text-muted: #8e8e9f;
+            --text-muted: #9e9eb3;
             --gold: #ffd700;
-            --gold-glow: rgba(255, 215, 0, 0.4);
+            --gold-glow: rgba(255, 215, 0, 0.5);
+            --verified-blue: #3897f0;
         }
 
         * {
@@ -25,6 +28,7 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             cursor: crosshair;
+            user-select: none;
         }
 
         body {
@@ -35,6 +39,7 @@
             position: relative;
         }
 
+        /* DYNAMIC NEON LIGHTING & PARTICLES CANVAS */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -47,16 +52,17 @@
 
         /* ANNOUNCEMENT BANNER */
         .top-bar {
-            background: linear-gradient(90deg, #7000ff, #ff0055, #7000ff);
-            background-size: 200% 200%;
-            animation: gradientMove 6s ease infinite;
+            background: linear-gradient(90deg, #7000ff, #ff0055, #00f0ff, #7000ff);
+            background-size: 300% 300%;
+            animation: gradientMove 4s ease infinite;
             color: #fff;
             text-align: center;
-            padding: 6px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 1px;
+            padding: 8px;
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
         }
 
         @keyframes gradientMove {
@@ -65,17 +71,19 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* STICKY HEADER WITH GLASSMORPHISM */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
-            background: rgba(7, 7, 9, 0.85);
+            background: rgba(5, 5, 8, 0.88);
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 0, 85, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
         }
 
         .logo-container {
@@ -83,24 +91,32 @@
             align-items: center;
             gap: 12px;
             cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.03);
         }
 
         .nav-logo-img {
-            height: 42px;
+            height: 44px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 0 8px var(--primary-glow));
+            filter: drop-shadow(0 0 10px var(--primary-glow));
         }
 
         .logo-text {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 900;
             font-style: italic;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        .logo-text span.red-text { color: #ff0055; }
+        .logo-text span.red-text {
+            color: #ff0055;
+            text-shadow: 0 0 12px var(--primary-glow);
+        }
         .logo-text span.white-text { color: #ffffff; }
 
         .nav-right-container {
@@ -113,57 +129,57 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 6px 12px;
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
         }
 
         .nav-link {
             color: var(--text-muted);
             text-decoration: none;
-            padding: 8px 16px;
+            padding: 8px 18px;
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
             border-radius: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .nav-link:hover, .nav-link.active {
             color: #fff;
             background: var(--primary);
-            box-shadow: 0 0 12px var(--primary-glow);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-1px);
         }
 
         .nav-link.special {
-            background: linear-gradient(135deg, rgba(255,0,85,0.2), rgba(112,0,255,0.2));
+            background: linear-gradient(135deg, rgba(255, 0, 85, 0.3), rgba(112, 0, 255, 0.3));
             border: 1px solid var(--primary);
             color: #fff;
+            box-shadow: 0 0 12px rgba(255, 0, 85, 0.2);
         }
 
         .currency-select {
-            background: rgba(17, 17, 22, 0.9);
+            background: rgba(15, 15, 22, 0.95);
             color: #fff;
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--primary);
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 700;
+            font-weight: 800;
             outline: none;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
         .currency-select:hover, .currency-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 10px var(--primary-glow);
-        }
-
-        .currency-select option {
-            background: #111116;
-            color: #fff;
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px var(--cyan-glow);
         }
 
         .tab-content {
@@ -179,7 +195,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -194,117 +210,182 @@
         }
 
         .hero-badge {
-            background: rgba(255, 0, 85, 0.15);
+            background: rgba(255, 0, 85, 0.18);
             border: 1px solid var(--primary);
             color: #ff0055;
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 20px;
             font-size: 0.75rem;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 20px;
-            box-shadow: 0 0 15px var(--primary-glow);
+            box-shadow: 0 0 20px var(--primary-glow);
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px var(--primary-glow); }
+            100% { box-shadow: 0 0 25px var(--primary-glow); }
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 4.2rem;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 3px;
             font-style: italic;
             margin-bottom: 15px;
-            text-shadow: 0 0 30px var(--primary-glow);
+            text-shadow: 0 0 35px var(--primary-glow);
+            background: linear-gradient(180deg, #ffffff 40%, #ff0055 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .hero h1 span { color: var(--primary); }
-
         .hero p {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
-            max-width: 650px;
+            max-width: 680px;
             margin-bottom: 35px;
             line-height: 1.6;
         }
 
         .hero-btns {
             display: flex;
-            gap: 15px;
+            gap: 18px;
             justify-content: center;
         }
 
-        /* FIXED STATS COUNTER BAR (EVEN SPACING GRID) */
+        /* LIVE ACTIVITY BAR */
+        .live-activity-bar {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .live-pill {
+            background: rgba(15, 15, 22, 0.9);
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            padding: 12px 22px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s ease;
+        }
+
+        .live-pill:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .live-indicator {
+            width: 9px;
+            height: 9px;
+            background-color: #00ff66;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff66;
+            animation: pulseGreen 1.5s infinite;
+        }
+
+        @keyframes pulseGreen {
+            0% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.3); }
+            100% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* STATS COUNTER BAR */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            background: rgba(17, 17, 22, 0.7);
+            background: rgba(15, 15, 22, 0.75);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 50px;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 45px;
             width: 100%;
-            max-width: 850px;
-            backdrop-filter: blur(8px);
+            max-width: 880px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
 
-        .stat-item {
-            text-align: center;
-        }
+        .stat-item { text-align: center; }
 
         .stat-num {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 900;
             color: #fff;
-            text-shadow: 0 0 10px var(--primary-glow);
+            text-shadow: 0 0 15px var(--primary-glow);
         }
 
         .stat-desc {
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
+            letter-spacing: 1.2px;
+            margin-top: 6px;
+            font-weight: 700;
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: linear-gradient(135deg, #ff0055, #cc0044);
             color: #fff;
             text-decoration: none;
-            padding: 14px 32px;
+            padding: 15px 36px;
             font-size: 0.95rem;
-            font-weight: 800;
+            font-weight: 900;
             border-radius: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px var(--primary-glow);
-            transition: all 0.2s ease;
+            letter-spacing: 1.2px;
+            box-shadow: 0 0 25px var(--primary-glow);
+            transition: all 0.25s ease;
             display: inline-block;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px var(--primary-glow);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 35px var(--primary-glow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(1px);
         }
 
         .btn-secondary {
-            background: #1a1a24;
+            background: rgba(26, 26, 36, 0.9);
             color: #fff;
             text-decoration: none;
-            padding: 14px 32px;
+            padding: 15px 36px;
             font-size: 0.95rem;
-            font-weight: 800;
+            font-weight: 900;
             border-radius: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid var(--card-border);
-            transition: all 0.2s ease;
+            letter-spacing: 1.2px;
+            border: 1px solid var(--secondary);
+            transition: all 0.25s ease;
             display: inline-block;
+            box-shadow: 0 0 15px rgba(112, 0, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 25px var(--secondary-glow);
+            border-color: #8822ff;
         }
 
         .repo-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .repo-header p.sub {
@@ -312,20 +393,22 @@
             font-size: 0.85rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            font-weight: 800;
         }
 
         .repo-header h2 {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             text-transform: uppercase;
             font-weight: 900;
             font-style: italic;
+            text-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
         }
 
         .filter-control-bar {
             display: flex;
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
@@ -341,37 +424,37 @@
             width: 100%;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 12px 18px 12px 40px;
+            border-radius: 10px;
+            padding: 14px 18px 14px 44px;
             color: #fff;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             outline: none;
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
         .search-icon {
             position: absolute;
-            left: 14px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 1.1rem;
             pointer-events: none;
         }
 
         .filter-select {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 12px 18px;
+            border-radius: 10px;
+            padding: 14px 18px;
             color: #fff;
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
             outline: none;
             cursor: pointer;
@@ -380,64 +463,67 @@
 
         .filter-select:focus, .filter-select:hover {
             border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            gap: 28px;
         }
 
+        /* HIGH-GLOW GAMING CARDS */
         .card {
-            background-color: var(--card-bg);
+            background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 25px;
+            border-radius: 16px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.01);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 15px 40px rgba(255, 0, 85, 0.35);
         }
 
         .card.premium-card {
             border: 1px solid rgba(255, 215, 0, 0.4);
-            background: linear-gradient(180deg, rgba(255, 215, 0, 0.03) 0%, var(--card-bg) 100%);
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.05) 0%, var(--card-bg) 100%);
         }
 
         .card.premium-card:hover {
             border-color: var(--gold);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
         }
 
         .badge-tag {
             position: absolute;
-            top: 25px;
-            right: 25px;
+            top: 22px;
+            right: 22px;
             z-index: 10;
-            background: rgba(255, 0, 85, 0.85);
+            background: rgba(255, 0, 85, 0.9);
             border: 1px solid var(--primary);
             color: #ffffff;
             font-size: 0.65rem;
-            font-weight: 800;
-            padding: 5px 12px;
+            font-weight: 900;
+            padding: 5px 14px;
             border-radius: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
             pointer-events: none;
         }
 
         .badge-tag.gold {
-            background: rgba(255, 215, 0, 0.9);
+            background: rgba(255, 215, 0, 0.95);
             border-color: var(--gold);
             color: #000000;
             font-weight: 900;
@@ -445,108 +531,121 @@
 
         .card-img-placeholder {
             width: 100%;
-            height: 160px;
-            background: #0d0d12;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            height: 165px;
+            background: rgba(8, 8, 12, 0.9);
+            border-radius: 12px;
+            margin-bottom: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             z-index: 1;
+            overflow: hidden;
         }
 
         .card-img-placeholder img {
-            max-height: 85px;
+            max-height: 90px;
             object-fit: contain;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+            filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-img-placeholder img {
+            transform: scale(1.1);
         }
 
         .card h3 {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 10px;
+            font-size: 1.35rem;
+            font-weight: 900;
+            margin-bottom: 12px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .card p {
             color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            margin-bottom: 22px;
         }
 
         .card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 18px;
         }
 
         .price-label {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
             text-transform: uppercase;
             display: block;
+            font-weight: 700;
         }
 
         .price-val {
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 900;
             color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         .btn-buy {
             background: var(--primary);
             color: #fff;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 800;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 900;
             text-transform: uppercase;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .btn-buy:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--primary-glow);
+            background: #ff1a66;
         }
 
         .pay-box {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 700px;
+            border-radius: 20px;
+            padding: 45px;
+            max-width: 720px;
             margin: 0 auto;
             text-align: center;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(14px);
         }
 
         .pay-box ol {
             text-align: left;
-            margin: 25px 0 35px 0;
-            padding-left: 20px;
+            margin: 28px 0 38px 0;
+            padding-left: 22px;
             color: var(--text-muted);
             line-height: 1.8;
-            font-size: 1rem;
+            font-size: 1.02rem;
         }
 
-        .pay-box ol li {
-            margin-bottom: 12px;
-        }
-
+        .pay-box ol li { margin-bottom: 14px; }
         .pay-box ol li strong { color: #fff; }
 
-        /* HIGHLIGHT BOX FOR EMAIL INSTRUCTION */
         .highlight-note {
-            background: rgba(255, 0, 85, 0.15);
+            background: rgba(255, 0, 85, 0.18);
             border: 1px solid var(--primary);
-            border-left: 4px solid var(--primary);
-            padding: 12px 16px;
-            border-radius: 6px;
+            border-left: 5px solid var(--primary);
+            padding: 14px 18px;
+            border-radius: 8px;
             color: #ffffff;
-            font-weight: 700;
-            box-shadow: 0 0 15px var(--primary-glow);
-            margin: 6px 0;
+            font-weight: 800;
+            box-shadow: 0 0 20px var(--primary-glow);
+            margin: 8px 0;
             display: block;
         }
 
@@ -555,22 +654,126 @@
             text-decoration: underline;
         }
 
+        /* RECENT PURCHASE POPUP TOAST */
+        .purchase-toast {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 9999;
+            background: rgba(15, 15, 22, 0.95);
+            border: 1px solid var(--card-border);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 320px;
+            max-width: 390px;
+            transform: translateY(130px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            backdrop-filter: blur(12px);
+        }
+
+        .purchase-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+            background: rgba(255, 0, 85, 0.12);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toast-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .toast-tag {
+            font-size: 0.68rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toast-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--verified-blue);
+            color: #fff;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            font-size: 0.6rem;
+            font-weight: 900;
+        }
+
+        .toast-item {
+            font-size: 0.82rem;
+            color: #d1d1e0;
+            margin-top: 1px;
+        }
+
+        .toast-meta {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .toast-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0 2px;
+        }
+
+        .toast-close:hover { color: #fff; }
+
         footer {
             text-align: center;
             padding: 40px;
             color: var(--text-muted);
             border-top: 1px solid var(--card-border);
-            font-size: 0.85rem;
-            margin-top: 60px;
+            font-size: 0.88rem;
+            margin-top: 70px;
         }
 
         @media (max-width: 850px) {
             header { flex-direction: column; gap: 15px; }
             .nav-right-container { flex-direction: column; gap: 12px; }
             nav { flex-wrap: wrap; justify-content: center; }
-            .hero h1 { font-size: 2.5rem; }
+            .hero h1 { font-size: 2.6rem; }
             .filter-control-bar { flex-direction: column; align-items: stretch; }
             .stats-bar { grid-template-columns: 1fr; gap: 20px; }
+            .purchase-toast { left: 15px; right: 15px; min-width: auto; bottom: 15px; }
         }
     </style>
 </head>
@@ -620,12 +823,25 @@
             <div class="hero-badge">OFFICIAL STORE</div>
             <h1>VengeX Sensi <span>Services</span></h1>
             <p>Premium sensitivity configurations engineered for competitive gameplay. Unlock smoother aim, faster drag shots, optimized device settings, and a complete setup guide to help you perform at your best.</p>
+            
             <div class="hero-btns">
                 <a href="#" class="btn-primary" onclick="switchTab('optimization')">Optimization Store</a>
-                <a href="https://discord.gg/7PE5UcV6RF" target="_blank" class="btn-secondary">Join Discord</a>
+                <a href="https://discord.gg/nTgJqP8SF" target="_blank" class="btn-secondary">Join Discord</a>
             </div>
 
-            <!-- STATS COUNTER BAR (FIXED GRID EVEN SPACING) -->
+            <!-- LIVE ACTIVITY BAR -->
+            <div class="live-activity-bar">
+                <div class="live-pill">
+                    <span class="live-indicator"></span>
+                    <span id="liveViewingText">24 people viewing</span>
+                </div>
+                <div class="live-pill">
+                    <span>🔥</span>
+                    <span id="liveSoldText">8 sold in 4 hours</span>
+                </div>
+            </div>
+
+            <!-- STATS COUNTER BAR -->
             <div class="stats-bar">
                 <div class="stat-item">
                     <div class="stat-num">5,000+</div>
@@ -687,7 +903,7 @@
                         <span class="price-label">Investment</span>
                         <span class="price-val">$10.00</span>
                     </div>
-                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8" target="_blank" class="btn-buy">Buy Now</a>
+                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8/tip?amount=10&message=Bought+VengeX+iOS+Pack" target="_blank" class="btn-buy">Buy Now</a>
                 </div>
             </div>
 
@@ -704,7 +920,7 @@
                         <span class="price-label">Investment</span>
                         <span class="price-val">$15.00</span>
                     </div>
-                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8" target="_blank" class="btn-buy">Buy Now</a>
+                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8/tip?amount=15&message=Bought+VengeX+iOS+Pack+Premium" target="_blank" class="btn-buy">Buy Now</a>
                 </div>
             </div>
 
@@ -721,7 +937,7 @@
                         <span class="price-label">Investment</span>
                         <span class="price-val">$25.00</span>
                     </div>
-                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8" target="_blank" class="btn-buy">Buy Now</a>
+                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8/tip?amount=25&message=Bought+Sensitivity+Generators" target="_blank" class="btn-buy">Buy Now</a>
                 </div>
             </div>
 
@@ -738,7 +954,7 @@
                         <span class="price-label">Investment</span>
                         <span class="price-val">$10.00</span>
                     </div>
-                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8" target="_blank" class="btn-buy">Buy Now</a>
+                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8/tip?amount=10&message=Bought+VengeX+Android+Pack" target="_blank" class="btn-buy">Buy Now</a>
                 </div>
             </div>
 
@@ -755,7 +971,7 @@
                         <span class="price-label">Investment</span>
                         <span class="price-val">$15.00</span>
                     </div>
-                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8" target="_blank" class="btn-buy">Buy Now</a>
+                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8/tip?amount=15&message=Bought+VengeX+Android+Pack+Premium" target="_blank" class="btn-buy">Buy Now</a>
                 </div>
             </div>
 
@@ -772,7 +988,7 @@
                         <span class="price-label">Investment</span>
                         <span class="price-val">$30.00</span>
                     </div>
-                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8" target="_blank" class="btn-buy">Buy Now</a>
+                    <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8/tip?amount=30&message=Bought+VengeX+PC+Pack" target="_blank" class="btn-buy">Buy Now</a>
                 </div>
             </div>
 
@@ -798,7 +1014,7 @@
                         <span class="price-label">Price</span>
                         <span class="price-val">$25.00</span>
                     </div>
-                    <a href="https://discord.gg/7PE5UcV6RF" target="_blank" class="btn-buy">Coming Soon</a>
+                    <a href="https://discord.gg/nTgJqP8SF" target="_blank" class="btn-buy">Coming Soon</a>
                 </div>
             </div>
 
@@ -813,7 +1029,7 @@
                         <span class="price-label">Price</span>
                         <span class="price-val">$50.00</span>
                     </div>
-                    <a href="https://discord.gg/7PE5UcV6RF" target="_blank" class="btn-buy">Coming Soon</a>
+                    <a href="https://discord.gg/nTgJqP8SF" target="_blank" class="btn-buy">Coming Soon</a>
                 </div>
             </div>
         </div>
@@ -837,7 +1053,7 @@
                         <span class="price-label">Status</span>
                         <span class="price-val">Coming Soon</span>
                     </div>
-                    <a href="https://discord.gg/7PE5UcV6RF" target="_blank" class="btn-buy">Join Waitlist</a>
+                    <a href="https://discord.gg/nTgJqP8SF" target="_blank" class="btn-buy">Join Waitlist</a>
                 </div>
             </div>
         </div>
@@ -855,7 +1071,7 @@
                 <p>Instant registry optimizer to stabilize raw mouse input curves.</p>
                 <div class="card-footer">
                     <div><span class="price-val">FREE</span></div>
-                    <a href="https://discord.gg/7PE5UcV6RF" target="_blank" class="btn-buy">Download</a>
+                    <a href="https://discord.gg/nTgJqP8SF" target="_blank" class="btn-buy">Download</a>
                 </div>
             </div>
             <div class="card">
@@ -863,7 +1079,7 @@
                 <p>Basic keymapping and memory cleaner script for BlueStacks / MSI.</p>
                 <div class="card-footer">
                     <div><span class="price-val">FREE</span></div>
-                    <a href="https://discord.gg/7PE5UcV6RF" target="_blank" class="btn-buy">Download</a>
+                    <a href="https://discord.gg/nTgJqP8SF" target="_blank" class="btn-buy">Download</a>
                 </div>
             </div>
         </div>
@@ -878,19 +1094,37 @@
         <div class="pay-box">
             <h3>Payment Instructions</h3>
             <ol>
-                <li>Before you pay here, place your <strong>Name / Username</strong> in the payment note.</li>
+                <li>When paying via Streamlabs, type your <strong>Discord Handle / Username</strong> in the note field.</li>
                 <li>
                     <div class="highlight-note">
-                        ✉️ In the message tab, please put your <span>email address</span> where you want the sensitivity pack sent!
+                        ✉️ In the Streamlabs message box, include your <span>Email Address</span> and the exact <span>Pack Name</span> (e.g. iOS Premium / Android / PC Pack)!
                     </div>
                 </li>
-                <li>Join my <strong>Discord server</strong> and create a ticket if you have any problems or need assistance.</li>
-                <li>Tell me your name in the ticket so I can verify your order!</li>
-                <li><em>Alternatively:</em> You can join my Discord, make a ticket, and purchase directly from there. (Recommended way)</li>
+                <li>Join my <strong>Discord server</strong> and open a support ticket if you need immediate assistance or direct file delivery.</li>
+                <li>Provide your transaction receipt name inside the ticket to verify your order instantly.</li>
+                <li><em>Recommended Method:</em> You can also open a ticket in Discord first to order directly from us!</li>
             </ol>
-            <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8" target="_blank" class="btn-primary" style="font-size: 1.1rem; padding: 16px 40px;">PAY HERE VIA STREAMLABS</a>
+            <a href="https://streamlabs.com/sl_id_75295a15-c765-3ac3-940a-ba0c631d6fc8/tip" target="_blank" class="btn-primary" style="font-size: 1.1rem; padding: 16px 40px;">PAY HERE VIA STREAMLABS</a>
         </div>
     </section>
+
+    <!-- RECENT PURCHASE POPUP TOAST -->
+    <div class="purchase-toast" id="purchaseToast">
+        <div class="toast-icon">🛒</div>
+        <div class="toast-content">
+            <div class="toast-tag">
+                <span class="live-indicator"></span>
+                RECENT PURCHASE
+            </div>
+            <div class="toast-title">
+                <span id="toastBuyerName">Alex_Gamer</span>
+                <span class="verified-badge">✓</span>
+            </div>
+            <div class="toast-item" id="toastItemName">bought VengeX iOS Pack</div>
+            <div class="toast-meta" id="toastMetaText">1 buyer • 12 minutes ago</div>
+        </div>
+        <button class="toast-close" onclick="closeToast()">✕</button>
+    </div>
 
     <footer>
         <p>&copy; 2026 VengeX Sensi Services. All rights reserved.</p>
@@ -906,190 +1140,260 @@
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => link.classList.remove('active'));
 
-            const targetTab = document.getElementById(tabId);
-            if(targetTab) {
-                targetTab.classList.add('active');
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
             }
 
-            const activeLink = Array.from(navLinks).find(link => 
-                link.getAttribute('onclick') && link.getAttribute('onclick').includes(tabId)
-            );
-            if(activeLink && tabId !== 'special') {
-                activeLink.classList.add('active');
+            navLinks.forEach(link => {
+                const linkOnClick = link.getAttribute('onclick');
+                if (linkOnClick && linkOnClick.includes(`'${tabId}'`)) {
+                    link.classList.add('active');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 2. DYNAMIC LIVE COUNTERS ("People Viewing" & "Sold")
+        function initLiveCounters() {
+            const viewingElem = document.getElementById('liveViewingText');
+            const soldElem = document.getElementById('liveSoldText');
+
+            function updateCounters() {
+                const randomViewing = Math.floor(Math.random() * 21) + 18;
+                const randomSold = Math.floor(Math.random() * 7) + 6;
+                const randomHours = Math.floor(Math.random() * 3) + 2;
+
+                if (viewingElem) viewingElem.textContent = `${randomViewing} people viewing`;
+                if (soldElem) soldElem.textContent = `${randomSold} sold in ${randomHours} hours`;
+            }
+
+            updateCounters();
+            setInterval(updateCounters, 12000);
+        }
+
+        // 3. DYNAMIC RECENT PURCHASE POPUP TOAST SYSTEM
+        const buyerNames = [
+            'Alex_Gamer', 'Shanice_FF', 'Trevon_Aim', 'Chloe_GamerGirl', 'Dwyane_Sensi',
+            'Tariq_Pro', 'Marcus_V3', 'Rohan_Headshot', 'Zoe_Gamer', 'Andre_Ja',
+            'Jordan_Apex', 'Kezia_Plays', 'Malik_FF', 'Jayda_Queen', 'Tevin_Drag',
+            'Brandon_X', 'Sasha_Aim', 'Devonte_Pro', 'Kaci_Shooter', 'Tyrese_FPS',
+            'Liam_Gamer', 'Emma_Headshots', 'Noah_Scope', 'Olivia_Sensi', 'Ethan_Tap',
+            'Sophia_Killz', 'Mason_Vibe', 'Isabella_Win', 'William_Drag', 'Ava_Gaming',
+            'James_X', 'MIA_Gamer', 'Benjamin_Aim', 'Charlotte_Pro', 'Lucas_Sensi',
+            'Amelia_Plays', 'Henry_Scope', 'Harper_Gamer', 'Alexander_FF', 'Evelyn_FF',
+            'Daniel_V2', 'Abigail_Tap', 'Matthew_Pro', 'Emily_Sensi', 'Jackson_FF',
+            'Elizabeth_Win', 'Sebastian_Aim', 'Sofia_Drag', 'Jack_Gamer', 'Avery_Plays',
+            'Owen_Scope', 'Ella_Shooter', 'Gabriel_Sensi', 'Scarlett_Killz', 'Julian_FF',
+            'Grace_Headshots', 'Levi_Tap', 'Chloe_Pro', 'Wyatt_Apex', 'Camila_Vibe',
+            'Carter_Gamer', 'Penelope_Sensi', 'Jayden_Drag', 'Riley_Aim', 'John_Scope',
+            'Layla_FF', 'Luke_Pro', 'Lillian_Tap', 'Anthony_Killz', 'Nora_Shooter',
+            'Isaac_Sensi', 'Zoey_Gamer', 'Dylan_Apex', 'Mila_Headshots', 'Leo_FF',
+            'Hannah_Drag', 'Khashi_Gamer', 'Romario_Sensi', 'Kemar_FF', 'Damian_Aim',
+            'Tanya_Queen', 'Jevaughn_Pro', 'Sade_Gaming', 'Oshane_Scope', 'Alps_Gamer',
+            'Rayan_Sensi', 'Kabir_FF', 'Aarav_Aim', 'Ananya_Drag', 'Zaid_Scope',
+            'Lucas_Brl', 'Mateo_Sensi', 'Thiago_Aim', 'Enzo_FF', 'Gabriel_Drag',
+            'Kai_FPS', 'Leo_Vibe', 'Milo_Gamer', 'Ezra_Pro', 'Asher_Sensi'
+        ];
+
+        const purchaseItems = [
+            'bought VengeX iOS Pack',
+            'bought VengeX iOS Premium Pack',
+            'bought VengeX Android Pack',
+            'bought VengeX Android Premium Pack',
+            'bought VengeX PC Pack',
+            'bought Sensitivity Generator Tool'
+        ];
+
+        let toastTimeout;
+
+        function getRandomTimeAgo() {
+            const min = Math.floor(Math.random() * 50) + 2;
+            if (min >= 45) {
+                return '1 hour ago';
+            } else {
+                return `${min} minutes ago`;
             }
         }
 
-        // 2. CURRENCY CONVERSION WITH REAL-TIME API
-        let rates = {
-            USD: { rate: 1.0, symbol: '$' },
-            EUR: { rate: 0.92, symbol: '€' },
-            GBP: { rate: 0.79, symbol: '£' },
-            BRL: { rate: 5.65, symbol: 'R$' },
-            INR: { rate: 83.7, symbol: '₹' },
-            PKR: { rate: 278.5, symbol: 'Rs ' }
+        function triggerPurchaseToast() {
+            const toast = document.getElementById('purchaseToast');
+            const buyerNameElem = document.getElementById('toastBuyerName');
+            const itemNameElem = document.getElementById('toastItemName');
+            const metaTextElem = document.getElementById('toastMetaText');
+
+            if (!toast) return;
+
+            const randomName = buyerNames[Math.floor(Math.random() * buyerNames.length)];
+            const randomItem = purchaseItems[Math.floor(Math.random() * purchaseItems.length)];
+            const timeAgoText = getRandomTimeAgo();
+
+            buyerNameElem.textContent = randomName;
+            itemNameElem.textContent = randomItem;
+            metaTextElem.textContent = `1 buyer • ${timeAgoText}`;
+
+            toast.classList.add('show');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                closeToast();
+            }, 5500);
+        }
+
+        function closeToast() {
+            const toast = document.getElementById('purchaseToast');
+            if (toast) toast.classList.remove('show');
+        }
+
+        function startToastLoop() {
+            setTimeout(() => {
+                triggerPurchaseToast();
+                setInterval(() => {
+                    triggerPurchaseToast();
+                }, Math.floor(Math.random() * 7000) + 9000);
+            }, 3000);
+        }
+
+        // 4. CURRENCY & FILTER CONTROLS
+        const currencyRates = {
+            USD: { symbol: '$', rate: 1.0 },
+            EUR: { symbol: '€', rate: 0.92 },
+            GBP: { symbol: '£', rate: 0.79 },
+            BRL: { symbol: 'R$', rate: 5.0 },
+            INR: { symbol: '₹', rate: 83.0 },
+            PKR: { symbol: 'Rs', rate: 278.0 }
         };
 
-        const currencySelect = document.getElementById('currencySelect');
+        function updateCurrencies() {
+            const currencySelect = document.getElementById('currencySelect');
+            const selectedCurrency = currencySelect ? currencySelect.value : 'USD';
+            const rateObj = currencyRates[selectedCurrency] || currencyRates.USD;
 
-        async function fetchLiveExchangeRates() {
-            try {
-                const response = await fetch('https://open.er-api.com/v6/latest/USD');
-                if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                
-                if (data && data.rates) {
-                    rates.USD.rate = 1.0;
-                    rates.EUR.rate = data.rates.EUR || rates.EUR.rate;
-                    rates.GBP.rate = data.rates.GBP || rates.GBP.rate;
-                    rates.BRL.rate = data.rates.BRL || rates.BRL.rate;
-                    rates.INR.rate = data.rates.INR || rates.INR.rate;
-                    rates.PKR.rate = data.rates.PKR || rates.PKR.rate;
-                    updatePrices();
-                }
-            } catch (error) {
-                console.warn('Live rates fetch failed, using fallback exchange rates:', error);
-            }
-        }
-
-        function updatePrices() {
-            const selectedCurrency = currencySelect.value;
-            const currencyConfig = rates[selectedCurrency] || rates.USD;
             const cards = document.querySelectorAll('.card[data-base-price]');
-
             cards.forEach(card => {
                 const basePrice = parseFloat(card.getAttribute('data-base-price'));
                 if (!isNaN(basePrice)) {
-                    const converted = (basePrice * currencyConfig.rate).toFixed(2);
+                    const convertedPrice = (basePrice * rateObj.rate).toFixed(2);
                     const priceValElem = card.querySelector('.price-val');
                     if (priceValElem) {
-                        priceValElem.textContent = `${currencyConfig.symbol}${converted}`;
+                        priceValElem.textContent = `${rateObj.symbol}${convertedPrice}`;
                     }
                 }
             });
         }
 
-        if (currencySelect) {
-            currencySelect.addEventListener('change', updatePrices);
-        }
-
-        // 3. SEARCH, FILTER, AND SORTING SYSTEM
-        const searchInput = document.getElementById('searchInput');
-        const categorySelect = document.getElementById('categorySelect');
-        const orderSelect = document.getElementById('orderSelect');
-        const optimizationGrid = document.getElementById('optimizationGrid');
-
         function filterAndSortCards() {
-            if (!optimizationGrid) return;
+            const searchInput = document.getElementById('searchInput');
+            const categorySelect = document.getElementById('categorySelect');
+            const orderSelect = document.getElementById('orderSelect');
+            const grid = document.getElementById('optimizationGrid');
 
-            const searchQuery = (searchInput ? searchInput.value : '').toLowerCase().trim();
-            const selectedCategory = categorySelect ? categorySelect.value : 'ALL';
-            const selectedOrder = orderSelect ? orderSelect.value : 'default';
+            if (!grid) return;
 
-            const cards = Array.from(optimizationGrid.children);
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const category = categorySelect ? categorySelect.value : 'ALL';
+            const order = orderSelect ? orderSelect.value : 'default';
+
+            let cards = Array.from(grid.querySelectorAll('.card'));
 
             cards.forEach(card => {
-                const category = card.getAttribute('data-category') || '';
-                const name = (card.getAttribute('data-name') || '').toLowerCase();
-                const textContent = card.textContent.toLowerCase();
+                const cardName = (card.getAttribute('data-name') || '').toLowerCase();
+                const cardCat = card.getAttribute('data-category') || '';
+                const cardText = card.textContent.toLowerCase();
 
-                const matchesCategory = selectedCategory === 'ALL' || category === selectedCategory;
-                const matchesSearch = name.includes(searchQuery) || textContent.includes(searchQuery);
+                const matchesSearch = !query || cardName.includes(query) || cardText.includes(query);
+                const matchesCategory = category === 'ALL' || cardCat === category;
 
-                if (matchesCategory && matchesSearch) {
+                if (matchesSearch && matchesCategory) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
             });
 
-            if (selectedOrder !== 'default') {
+            if (order !== 'default') {
                 cards.sort((a, b) => {
-                    const priceA = parseFloat(a.getAttribute('data-base-price')) || 0;
-                    const priceB = parseFloat(b.getAttribute('data-base-price')) || 0;
+                    const priceA = parseFloat(a.getAttribute('data-base-price') || 0);
+                    const priceB = parseFloat(b.getAttribute('data-base-price') || 0);
 
-                    return selectedOrder === 'low-to-high' ? priceA - priceB : priceB - priceA;
+                    return order === 'low-to-high' ? priceA - priceB : priceB - priceA;
                 });
 
-                cards.forEach(card => optimizationGrid.appendChild(card));
+                cards.forEach(card => grid.appendChild(card));
             }
         }
 
-        if (searchInput) searchInput.addEventListener('input', filterAndSortCards);
-        if (categorySelect) categorySelect.addEventListener('change', filterAndSortCards);
-        if (orderSelect) orderSelect.addEventListener('change', filterAndSortCards);
-
-        // 4. ANIMATED CANVAS BACKGROUND
-        const canvas = document.getElementById('bg-canvas');
-        if (canvas) {
+        // 5. ENHANCED PARTICLES & GLOW CANVAS
+        function initCanvasBg() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            let particles = [];
 
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
+            let width = (canvas.width = window.innerWidth);
+            let height = (canvas.height = window.innerHeight);
 
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
 
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 2 + 0.5;
-                    this.speedX = (Math.random() - 0.5) * 0.5;
-                    this.speedY = (Math.random() - 0.5) * 0.5;
-                    this.color = Math.random() > 0.5 ? '#ff0055' : '#7000ff';
-                    this.alpha = Math.random() * 0.5 + 0.2;
-                }
-
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-
-                    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                        this.reset();
-                    }
-                }
-
-                draw() {
-                    ctx.save();
-                    ctx.globalAlpha = this.alpha;
-                    ctx.fillStyle = this.color;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                }
-            }
-
-            function initParticles() {
-                particles = [];
-                const count = Math.floor((canvas.width * canvas.height) / 15000);
-                for (let i = 0; i < count; i++) {
-                    particles.push(new Particle());
-                }
-            }
+            const particles = Array.from({ length: 60 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2.5 + 0.5,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                alpha: Math.random() * 0.6 + 0.2,
+                color: Math.random() > 0.3 ? '#ff0055' : '#7000ff'
+            }));
 
             function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, width, height);
+
                 particles.forEach(p => {
-                    p.update();
-                    p.draw();
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = p.color;
+                    ctx.fill();
                 });
+
                 requestAnimationFrame(animate);
             }
 
-            initParticles();
             animate();
         }
 
-        // INITIALIZE
-        fetchLiveExchangeRates();
+        // INITIALIZE ALL SYSTEMS ON PAGE LOAD
+        document.addEventListener('DOMContentLoaded', () => {
+            initCanvasBg();
+            initLiveCounters();
+            startToastLoop();
+
+            const currencySelect = document.getElementById('currencySelect');
+            if (currencySelect) {
+                currencySelect.addEventListener('change', updateCurrencies);
+            }
+
+            const searchInput = document.getElementById('searchInput');
+            const categorySelect = document.getElementById('categorySelect');
+            const orderSelect = document.getElementById('orderSelect');
+
+            if (searchInput) searchInput.addEventListener('input', filterAndSortCards);
+            if (categorySelect) categorySelect.addEventListener('change', filterAndSortCards);
+            if (orderSelect) orderSelect.addEventListener('change', filterAndSortCards);
+        });
     </script>
 </body>
 </html>
